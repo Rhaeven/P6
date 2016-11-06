@@ -138,15 +138,33 @@ function EvoPanel() {
 			for (var i = 0; i < app.popCount; i++) {
 				var rawDNA0 = winners[Math.floor(winners.length * Math.random())].dna.values;
 				var rawDNA1 = winners[Math.floor(winners.length * Math.random())].dna.values;
-
+				
+				//console.log(rawDNA0[0])
+				
 				/*
 				 * TODO: Replace this with real crossover
 				 * The raw DNA is just an array of floats [0,1]
 				 * Use that to fill in the childDNA with the right values
 				 */
-				var childDNA = app.population.createDNA();
+				 
+				 // crossover
+				var childDNA1 = app.population.createDNA();
+				var childDNA2 = app.population.createDNA();
+				
+				var crossoverPoint = Math.floor(Math.random() * childDNA1.values.length);
+				 
+				
 				for (var j = 0; j < childDNA.values.length; j++) {
-					childDNA.values[j] = Math.random();
+					//childDNA.values[j] = Math.random();
+					if (j < crossoverPoint) {
+						childDNA1.values[j] = rawDNA0[j]
+						childDNA2.values[j] = rawDNA1[j]
+					}
+					else {
+						childDNA1.values[j] = rawDNA1[j]
+						childDNA2.values[j] = rawDNA0[j]
+					}
+					 
 				}
 				
 				nextGeneration[i] = app.population.dnaToIndividual(childDNA);

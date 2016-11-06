@@ -3,7 +3,7 @@
  */
 
 var app = {
-	popCount : 6,
+	popCount : 2,
 	dnaSize : 20,
 	simView : true,
 	boidsPerFlock : 10,

@@ -610,6 +610,8 @@ var Vector = Class.extend({
 		this.x = v0.x * m0 + v1.x * m1;
 		this.y = v0.y * m0 + v1.y * m1;
 		this.z = v0.z * m0 + v1.z * m1;
+		
+		//console.log(this.x + " | " + this.y + " | " + this.z)
 	},
 
 	setToDifference : function(v0, v1) {
