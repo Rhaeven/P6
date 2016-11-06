@@ -3,11 +3,7 @@
  */
 
 var app = {
-<<<<<<< HEAD
-	popCount : 2,
-=======
 	popCount : 6,
->>>>>>> e05a7516d907c20916fd672f24db0d5fa0e6b901
 	dnaSize : 20,
 	simView : true,
 	boidsPerFlock : 10,

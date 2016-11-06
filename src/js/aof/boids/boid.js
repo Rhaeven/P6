@@ -118,62 +118,6 @@ var Boid = Particle.extend({
 		// EXAMPLE_FOOD: This example force searches for food directly ahead, and,
 		// if found, exerts a lunging force forward
 		// Can you think of a better method?
-<<<<<<< HEAD
-		
-		if(this.flock.dna.values[16] > .5)
-		{
-			this.forces[6].setTo(this.v);
-			this.forces[6].normalize();
-			var sampleSpot = new Vector();
-			
-			var bestFoodAmount = 0;
-			var bestDirection = this.rotation;
-			
-			for (j = 0; j < 9; j++)
-			{
-				var angle = this.rotation + Math.PI/8 * j - Math.PI/2;
-				var vMagnitude = Math.pow(Math.pow(this.v.x, 2) + Math.pow(this.v.y, 2), .5);
-				
-				var foodAmount = 0;
-				
-				for (var k = 1; k <= 5; k++)
-				{
-					sampleSpot.setTo(this)
-					sampleSpot.addPolar(5 * k, angle)
-					foodAmount = foodAmount + environment.getFoodAt(sampleSpot)
-				}
-				
-				if (bestFoodAmount < foodAmount)
-				{
-					bestFoodAmount = foodAmount;
-					bestDirection = this.rotation - Math.PI/2 + Math.PI/8 *j; // overcorrection
-				}
-			}
-			
-			if (bestFoodAmount > 0)
-			{
-				this.forces[6].setToPolar(500, bestDirection)
-			}
-		}
-		else
-		{	
-			this.forces[6].setTo(this.v);
-			this.forces[6].normalize();
-			var sampleSpot = new Vector();
-			var total = 0;
-			for (var i = 0; i < 20; i++) {
-
-				//sampleSpot.setToAddMultiple(this, 1, this.v, i * .012 + .005);
-				sampleSpot.setTo(this)
-				sampleSpot.addPolar(2 * i, this.rotation)
-				amt = environment.getFoodAt(sampleSpot);
-				total += amt;
-			}
-			this.forces[6].mult(200 * total);
-		}
-
-		
-=======
 
 		this.forces[6].setTo(this.v);
 		this.forces[6].normalize();
@@ -186,7 +130,6 @@ var Boid = Particle.extend({
 			total += amt;
 		}
 		this.forces[6].mult(200 * total);
->>>>>>> e05a7516d907c20916fd672f24db0d5fa0e6b901
 
 		// EXAMPLE_MOUSE: Try making the boids CHASE or RUN FROM your mouse movement
 		// Try controlling fearfulness/curiosity about 
@@ -246,42 +189,6 @@ var Boid = Particle.extend({
 		var wx = (1 + .5 * Math.sin(-this.flapCycle * Math.PI * 2)) * this.wingWidth;
 		var wy = (1 + .2 * Math.cos(-this.flapCycle * Math.PI * 2)) * this.wingLength;
 
-<<<<<<< HEAD
-		// example of how to change aesthetics with extra variables
-		// this.flock.dna.values[6] = a third hue
-		// this.flock.dna.values[7] = feather length
-		g.fill(this.flock.dna.values[6], 1, .9);
-		g.beginShape(g.TRIANGLES);
-		g.vertex(-wy, wx);
-		g.vertex(-wy * .6, wx * .6);
-		g.vertex(-wy * .6 - this.flock.dna.values[7] * 20, wx * .8);
-		
-		g.vertex(-wy, -wx);
-		g.vertex(-wy * .6, -wx * .6);
-		g.vertex(-wy * .6 - this.flock.dna.values[7] * 20, -wx * .8);
-		g.endShape();
-		
-		// this.flock.dna.values[8] = a fourth hue
-		// this.flock.dna.values[9] = wing height
-		var wh = (1 + .2 * Math.sin(-this.flapCycle * Math.PI * 2)) * this.flock.dna.values[9]
-		var wg = (1 + .2 * Math.sin(-this.flapCycle * Math.PI * 2)) * this.flock.dna.values[8]
-		/*
-		g.fill(this.flock.dna.values[6], 1, .9)
-		g.beginShape(g.QUADS)
-		g.vertex(this.length * .2, 0)
-		g.vertex(wh * 25, wx)
-		g.vertex(-this.length * .4 + wg * 10, wx * .8)
-		g.vertex(-this.length * .4, 0)
-		
-		g.vertex(this.length * .2, 0)
-		g.vertex(wh * 25, -wx)
-		g.vertex(-this.length * .4 + wg * 10, -wx * .8)
-		g.vertex(-this.length * .4, 0)
-		g.endShape()
-		*/
-		
-=======
->>>>>>> e05a7516d907c20916fd672f24db0d5fa0e6b901
 		// Draw the body
 		g.noStroke();
 		g.fill(this.flock.hue0, 1, .9);
@@ -292,10 +199,6 @@ var Boid = Particle.extend({
 		g.vertex(-wy, -wx);
 		g.endShape();
 
-<<<<<<< HEAD
-		// Draw the center
-=======
->>>>>>> e05a7516d907c20916fd672f24db0d5fa0e6b901
 		g.fill(this.flock.hue1, 1.5 - 1.5 * this.flock.centerPastel, .25 + 1.5 * this.flock.centerPastel);
 		g.beginShape(g.TRIANGLE_FAN);
 		g.vertex(this.length * .4, 0);
@@ -303,10 +206,5 @@ var Boid = Particle.extend({
 		g.vertex(-this.length * .6, 0);
 		g.vertex(-wy * .6, -wx * .4);
 		g.endShape();
-<<<<<<< HEAD
-		
-		
-=======
->>>>>>> e05a7516d907c20916fd672f24db0d5fa0e6b901
 	},
 });
