@@ -154,8 +154,7 @@ function EvoPanel() {
 				var crossoverPoint = Math.floor(Math.random() * childDNA1.values.length);
 				 
 				
-				for (var j = 0; j < childDNA.values.length; j++) {
-					//childDNA.values[j] = Math.random();
+				for (var j = 0; j < childDNA1.values.length; j++) {
 					if (j < crossoverPoint) {
 						childDNA1.values[j] = rawDNA0[j]
 						childDNA2.values[j] = rawDNA1[j]
@@ -167,7 +166,9 @@ function EvoPanel() {
 					 
 				}
 				
-				nextGeneration[i] = app.population.dnaToIndividual(childDNA);
+				nextGeneration[i] = app.population.dnaToIndividual(childDNA1);
+				i++;
+				nextGeneration[i] = app.population.dnaToIndividual(childDNA2);
 			
 			}
 
@@ -195,11 +196,43 @@ function EvoPanel() {
 		 *
 		 *
 		 */
-		var sorted = app.population.individuals.sort(function(a, b) {
+		var scores = [];
+		var maxFood = 0;
+		
+		for (var i = 0; i < app.popCount; i++) {
+			scores[i] = app.population.individuals[i].food;
+			
+			if (scores[i] > maxFood)
+				maxFood = scores[i];
+		}
+		
+		var weightedScores = {};
+		for (var i = 0; i < app.popCount; i++) {
+			// add weighted food scores (50%)
+			weightedScores[i] = scores[i]/maxFood * 50;
+			
+			// add weighted color scores (25%)
+			
+			// add weighted flap scores (25%)
+			weightedScores[i] += app.population.individuals[i].dna.values[12] * 25;
+		}
+		
+		/*var sorted = app.population.individuals.sort(function(a, b) {
 			return b.food - a.food;
-		});
+		});*/
 		for (var i = 0; i < 3; i++) {
-			app.evoPanel.addToWinners(sorted[i], i);
+			
+			var maxScore = 0;
+			var maxKey = -1;
+			for (var key in weightedScores) {
+				if (maxScore < weightedScores[key]) {
+					maxScore = weightedScores[key];
+					maxKey = key;
+				}
+			}
+			
+			app.evoPanel.addToWinners(app.population.individuals[maxKey], i);
+			delete weightedScores[maxKey]
 		}
 	});
 
