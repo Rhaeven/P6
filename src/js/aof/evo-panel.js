@@ -211,41 +211,32 @@ function EvoPanel() {
 		 *
 		 *
 		 */
-
-            // commit bounds
 		var sorted = app.population.individuals.sort(function(a, b) {
 			return b.food - a.food;
 		});
 		for (var i = 0; i < 3; i++) {
 			app.evoPanel.addToWinners(sorted[i], i);
-
-                    // commit bounds
 		var scores = [];
 		var maxFood = 0;
-		
+
 		for (var i = 0; i < app.popCount; i++) {
 			scores[i] = app.population.individuals[i].food;
-			
 			if (scores[i] > maxFood)
 				maxFood = scores[i];
 		}
-		
 		var weightedScores = {};
 		for (var i = 0; i < app.popCount; i++) {
 			// add weighted food scores (50%)
 			weightedScores[i] = scores[i]/maxFood * 50;
-			
 			// add weighted color scores (25%)
 			
 			// add weighted flap scores (25%)
 			weightedScores[i] += app.population.individuals[i].dna.values[12] * 25;
 		}
-		
 		/*var sorted = app.population.individuals.sort(function(a, b) {
 			return b.food - a.food;
 		});*/
 		for (var i = 0; i < 3; i++) {
-			
 			var maxScore = 0;
 			var maxKey = -1;
 			for (var key in weightedScores) {
@@ -254,14 +245,11 @@ function EvoPanel() {
 					maxKey = key;
 				}
 			}
-			
 			app.evoPanel.addToWinners(app.population.individuals[maxKey], i);
-			delete weightedScores[maxKey]
-// commit bounds
+		    delete weightedScores[maxKey]
 		}
-	});
-
-}
+	        }
+        });
 
 EvoPanel.prototype.clearWinners = function() {
 	for (var i = 0; i < this.winnerSlots.length; i++) {
@@ -278,5 +266,6 @@ EvoPanel.prototype.addToWinners = function(individual, index) {
 		backgroundSize : "100%"
 	});
 	this.winnerSlots[index].individual = individual;
+}
 };
-
+    
