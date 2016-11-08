@@ -138,18 +138,52 @@ function EvoPanel() {
 			for (var i = 0; i < app.popCount; i++) {
 				var rawDNA0 = winners[Math.floor(winners.length * Math.random())].dna.values;
 				var rawDNA1 = winners[Math.floor(winners.length * Math.random())].dna.values;
+                            // commit bounds
+			    
+				//console.log(rawDNA0[0])
+				
 
+                            // commit bounds
 				/*
 				 * TODO: Replace this with real crossover
 				 * The raw DNA is just an array of floats [0,1]
 				 * Use that to fill in the childDNA with the right values
 				 */
+                            // commit bounds
+                            
 				var childDNA = app.population.createDNA();
 				for (var j = 0; j < childDNA.values.length; j++) {
 					childDNA.values[j] = Math.random();
 				}
 				
 				nextGeneration[i] = app.population.dnaToIndividual(childDNA);
+                            // commit bounds
+                            
+				 
+				 // crossover
+				var childDNA1 = app.population.createDNA();
+				var childDNA2 = app.population.createDNA();
+				
+				var crossoverPoint = Math.floor(Math.random() * childDNA1.values.length);
+				 
+				
+				for (var j = 0; j < childDNA1.values.length; j++) {
+					if (j < crossoverPoint) {
+						childDNA1.values[j] = rawDNA0[j]
+						childDNA2.values[j] = rawDNA1[j]
+					}
+					else {
+						childDNA1.values[j] = rawDNA1[j]
+						childDNA2.values[j] = rawDNA0[j]
+					}
+					 
+				}
+				
+				nextGeneration[i] = app.population.dnaToIndividual(childDNA1);
+				i++;
+				nextGeneration[i] = app.population.dnaToIndividual(childDNA2);
+
+                            // commit bounds
 			
 			}
 
@@ -177,11 +211,53 @@ function EvoPanel() {
 		 *
 		 *
 		 */
+
+            // commit bounds
 		var sorted = app.population.individuals.sort(function(a, b) {
 			return b.food - a.food;
 		});
 		for (var i = 0; i < 3; i++) {
 			app.evoPanel.addToWinners(sorted[i], i);
+
+                    // commit bounds
+		var scores = [];
+		var maxFood = 0;
+		
+		for (var i = 0; i < app.popCount; i++) {
+			scores[i] = app.population.individuals[i].food;
+			
+			if (scores[i] > maxFood)
+				maxFood = scores[i];
+		}
+		
+		var weightedScores = {};
+		for (var i = 0; i < app.popCount; i++) {
+			// add weighted food scores (50%)
+			weightedScores[i] = scores[i]/maxFood * 50;
+			
+			// add weighted color scores (25%)
+			
+			// add weighted flap scores (25%)
+			weightedScores[i] += app.population.individuals[i].dna.values[12] * 25;
+		}
+		
+		/*var sorted = app.population.individuals.sort(function(a, b) {
+			return b.food - a.food;
+		});*/
+		for (var i = 0; i < 3; i++) {
+			
+			var maxScore = 0;
+			var maxKey = -1;
+			for (var key in weightedScores) {
+				if (maxScore < weightedScores[key]) {
+					maxScore = weightedScores[key];
+					maxKey = key;
+				}
+			}
+			
+			app.evoPanel.addToWinners(app.population.individuals[maxKey], i);
+			delete weightedScores[maxKey]
+// commit bounds
 		}
 	});
 
