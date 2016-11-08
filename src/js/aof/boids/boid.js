@@ -135,9 +135,9 @@ var Boid = Particle.extend({
             // commit bounds
             
 	
-		this.forces[6].setTo(this.v);
-		this.forces[6].normalize();
-		var sampleSpot = new Vector();
+		//this.forces[6].setTo(this.v);
+		//this.forces[6].normalize();
+		//var sampleSpot = new Vector();
 		
 		var bestFoodAmount = 0;
 		var bestDirection = this.rotation;
@@ -269,7 +269,12 @@ var Boid = Particle.extend({
             
 		// example of how to change aesthetics with extra variables
 		// this.flock.dna.values[6] = a third hue
-		// this.flock.dna.values[7] = feather length
+	    // this.flock.dna.values[7] = feather length
+            console.log("Hue 0 is: ", this.flock.hue0);
+            console.log("Hue 1 is: ", this.flock.hue1);
+            console.log("DNA VALUE 6 is: ", this.flock.dna.values[6]);
+            console.log("DNA VALUE 8 is: ", this.flock.dna.values[8]);
+
 		g.fill(this.flock.dna.values[6], 1, .9);
 		g.beginShape(g.TRIANGLES);
 		g.vertex(-wy, wx);

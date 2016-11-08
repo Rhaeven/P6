@@ -211,9 +211,12 @@ function EvoPanel() {
 		 *
 		 *
 		 */
+            /*
 		var sorted = app.population.individuals.sort(function(a, b) {
 			return b.food - a.food;
 		});
+            */
+            
 		for (var i = 0; i < 3; i++) {
 			app.evoPanel.addToWinners(sorted[i], i);
 		var scores = [];
@@ -228,8 +231,17 @@ function EvoPanel() {
 		for (var i = 0; i < app.popCount; i++) {
 			// add weighted food scores (50%)
 			weightedScores[i] = scores[i]/maxFood * 50;
-			// add weighted color scores (25%)
+
+		    // add weighted color scores (25%)
+                    var col_uniq = Math.abs(app.population.individuals[i].hue0 - app.population.individuals[i].hue1);
+                    col_uniq = col_uniq * 25;
+                    weightedScores[i] += col_uniq;
+                    
+                    
 			
+
+
+
 			// add weighted flap scores (25%)
 			weightedScores[i] += app.population.individuals[i].dna.values[12] * 25;
 		}
