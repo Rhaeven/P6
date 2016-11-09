@@ -233,7 +233,16 @@ function EvoPanel() {
 			weightedScores[i] = scores[i]/maxFood * 50;
 
 		    // add weighted color scores (25%)
-                    var col_uniq = Math.abs(app.population.individuals[i].hue0 - app.population.individuals[i].hue1);
+                    // base it on deviation
+                    var col_diff = Math.abs(app.population.individuals[i].hue0 - app.population.individuals[i].hue1);
+                    // if col_diff == 0.5
+                    // weight = 1 - (0.5 - col_diff)
+                    // weight = 1 - (0.5 - 0.5)
+                    // weight = 1 - (0)
+                    // weight = 1
+                    // weight = weight * 25
+                    var col_uniq = Math.abs(0.5 - col_diff);
+                    col_uniq = 1 - col_uniq;
                     col_uniq = col_uniq * 25;
                     weightedScores[i] += col_uniq;
                     
